@@ -1,0 +1,33 @@
+# Environment
+.env
+
+# Database
+*.db
+
+# Runtime data (generated at runtime, never committed)
+data/faiss/
+data/generated_audio/
+data/*.jpg
+data/*.png
+data/*.mp3
+data/*.wav
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+
+# IDE
+.idea/
+.DS_Store
+
+# macOS artifacts
+__MACOSX/
+
+# Claude Code
+.claude/
+
+# OS
+Thumbs.db
