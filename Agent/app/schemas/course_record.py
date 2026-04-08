@@ -8,13 +8,13 @@ from pydantic import BaseModel, ConfigDict
 
 class CourseRecordBase(BaseModel):
     student_id: int
-    case_code: str
-    diagnosis: str
-    chief_complaint: Optional[str] = None
-    present_illness: Optional[str] = None
-    past_history: Optional[str] = None
-    treatment_plan: Optional[str] = None
-    attending_physician: Optional[str] = None
+    course_code: str
+    assessment: str
+    objective: Optional[str] = None
+    performance: Optional[str] = None
+    background: Optional[str] = None
+    study_plan: Optional[str] = None
+    teacher: Optional[str] = None
     recorded_at: Optional[datetime] = None
 
 
@@ -23,12 +23,12 @@ class CourseRecordCreate(CourseRecordBase):
 
 
 class CourseRecordUpdate(BaseModel):
-    diagnosis: Optional[str] = None
-    chief_complaint: Optional[str] = None
-    present_illness: Optional[str] = None
-    past_history: Optional[str] = None
-    treatment_plan: Optional[str] = None
-    attending_physician: Optional[str] = None
+    assessment: Optional[str] = None
+    objective: Optional[str] = None
+    performance: Optional[str] = None
+    background: Optional[str] = None
+    study_plan: Optional[str] = None
+    teacher: Optional[str] = None
     recorded_at: Optional[datetime] = None
 
 

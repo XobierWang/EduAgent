@@ -58,13 +58,13 @@ class CourseRecord(Base):
 
     id: Mapped[int] = mapped_column(primary_key=True, index=True)
     student_id: Mapped[int] = mapped_column(ForeignKey("students.id"), index=True)
-    case_code: Mapped[str] = mapped_column(String(64), unique=True, index=True)
-    diagnosis: Mapped[str] = mapped_column(String(255))
-    chief_complaint: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
-    present_illness: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
-    past_history: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
-    treatment_plan: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
-    attending_physician: Mapped[Optional[str]] = mapped_column(
+    course_code: Mapped[str] = mapped_column(String(64), unique=True, index=True)
+    assessment: Mapped[str] = mapped_column(String(255))
+    objective: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
+    performance: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
+    background: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
+    study_plan: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
+    teacher: Mapped[Optional[str]] = mapped_column(
         String(128), nullable=True
     )
     recorded_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
@@ -83,11 +83,11 @@ class LearningSession(Base):
 
     id: Mapped[int] = mapped_column(primary_key=True, index=True)
     student_id: Mapped[int] = mapped_column(ForeignKey("students.id"), index=True)
-    visit_code: Mapped[str] = mapped_column(String(64), unique=True, index=True)
-    visit_type: Mapped[str] = mapped_column(String(32))
+    session_code: Mapped[str] = mapped_column(String(64), unique=True, index=True)
+    session_type: Mapped[str] = mapped_column(String(32))
     department: Mapped[Optional[str]] = mapped_column(String(128), nullable=True)
-    physician_name: Mapped[Optional[str]] = mapped_column(String(128), nullable=True)
-    visit_time: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
+    teacher_name: Mapped[Optional[str]] = mapped_column(String(128), nullable=True)
+    session_time: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
     summary: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
     notes: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
     created_at: Mapped[datetime] = mapped_column(

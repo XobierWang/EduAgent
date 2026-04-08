@@ -8,11 +8,11 @@ from pydantic import BaseModel, ConfigDict
 
 class LearningSessionBase(BaseModel):
     student_id: int
-    visit_code: str
-    visit_type: str
+    session_code: str
+    session_type: str
     department: Optional[str] = None
-    physician_name: Optional[str] = None
-    visit_time: Optional[datetime] = None
+    teacher_name: Optional[str] = None
+    session_time: Optional[datetime] = None
     summary: Optional[str] = None
     notes: Optional[str] = None
 
@@ -22,10 +22,10 @@ class LearningSessionCreate(LearningSessionBase):
 
 
 class LearningSessionUpdate(BaseModel):
-    visit_type: Optional[str] = None
+    session_type: Optional[str] = None
     department: Optional[str] = None
-    physician_name: Optional[str] = None
-    visit_time: Optional[datetime] = None
+    teacher_name: Optional[str] = None
+    session_time: Optional[datetime] = None
     summary: Optional[str] = None
     notes: Optional[str] = None
 
@@ -34,6 +34,6 @@ class LearningSessionRead(LearningSessionBase):
     model_config = ConfigDict(from_attributes=True)
 
     id: int
-    visit_time: datetime
+    session_time: datetime
     created_at: datetime
     updated_at: datetime

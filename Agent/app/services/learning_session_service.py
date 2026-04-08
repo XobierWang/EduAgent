@@ -28,7 +28,7 @@ def list_learning_sessions(
     student_id: Optional[int] = None,
     limit: Optional[int] = None,
 ) -> list[LearningSession]:
-    stmt = select(LearningSession).order_by(LearningSession.visit_time.desc())
+    stmt = select(LearningSession).order_by(LearningSession.session_time.desc())
     if student_id is not None:
         stmt = stmt.where(LearningSession.student_id == student_id)
     if limit is not None and limit > 0:

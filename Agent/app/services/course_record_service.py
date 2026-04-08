@@ -17,8 +17,8 @@ def create_course_record(db: Session, payload: CourseRecordCreate) -> CourseReco
     return course_record
 
 
-def get_course_record_by_id(db: Session, case_id: int) -> Optional[CourseRecord]:
-    return db.get(CourseRecord, case_id)
+def get_course_record_by_id(db: Session, course_record_id: int) -> Optional[CourseRecord]:
+    return db.get(CourseRecord, course_record_id)
 
 
 def list_course_records(

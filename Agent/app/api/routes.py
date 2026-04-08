@@ -697,8 +697,8 @@ def update_student(
     tags=["Course Records"],
     summary="创建课程记录",
     description=(
-        "创建一条课程记录记录。课程记录主要用于保存评估、主诉、现病史、既往史、治疗方案和"
-        "主治教师等信息。"
+        "创建一条课程记录记录。课程记录主要用于保存评估、学习目标、学习表现、学习背景、学习计划和"
+        "教师等信息。"
     ),
 )
 def create_course_record(
@@ -728,10 +728,10 @@ def list_course_records(
     response_model=CourseRecordRead,
     tags=["Course Records"],
     summary="按 ID 查询课程记录",
-    description="按课程记录主键 case_id 查询单条课程记录详情。",
+    description="按课程记录主键 course_record_id 查询单条课程记录详情。",
 )
-def get_course_record(case_id: int, db: Session = Depends(get_db)) -> CourseRecordRead:
-    course_record = course_record_service.get_course_record_by_id(db, case_id)
+def get_course_record(course_record_id: int, db: Session = Depends(get_db)) -> CourseRecordRead:
+    course_record = course_record_service.get_course_record_by_id(db, course_record_id)
     if course_record is None:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="course record not found")
     return course_record
@@ -742,14 +742,14 @@ def get_course_record(case_id: int, db: Session = Depends(get_db)) -> CourseReco
     response_model=CourseRecordRead,
     tags=["Course Records"],
     summary="更新课程记录",
-    description="更新某条课程记录记录，例如修改评估、补充主诉或调整治疗方案。",
+    description="更新某条课程记录记录，例如修改评估、补充学习目标或调整学习计划。",
 )
 def update_course_record(
-    case_id: int,
+    course_record_id: int,
     payload: CourseRecordUpdate,
     db: Session = Depends(get_db),
 ) -> CourseRecordRead:
-    course_record = course_record_service.get_course_record_by_id(db, case_id)
+    course_record = course_record_service.get_course_record_by_id(db, course_record_id)
     if course_record is None:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="course record not found")
     return course_record_service.update_course_record(db, course_record, payload)
@@ -762,7 +762,7 @@ def update_course_record(
     tags=["Learning Sessions"],
     summary="创建学习记录",
     description=(
-        "创建一条学习记录。学习记录主要保存学习时间、科室、教师、摘要和备注等，"
+        "创建一条学习记录。学习记录主要保存学习时间、科目、教师、摘要和备注等，"
         "适合记录一次课程或住院过程。"
     ),
 )

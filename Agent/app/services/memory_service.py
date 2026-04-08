@@ -273,8 +273,8 @@ def _rebuild_business_memory_events(
                 student_id=student.id,
                 event_type="course_record",
                 event_time=course_record.recorded_at,
-                title=f"课程记录评估：{course_record.diagnosis}",
-                summary=course_record.chief_complaint or course_record.treatment_plan,
+                title=f"课程记录评估：{course_record.assessment}",
+                summary=course_record.objective or course_record.study_plan,
                 source_type="course_record",
                 source_id=str(course_record.id),
             )
@@ -285,7 +285,7 @@ def _rebuild_business_memory_events(
             MemoryEvent(
                 student_id=student.id,
                 event_type="learning_session",
-                event_time=learning_session.visit_time,
+                event_time=learning_session.session_time,
                 title=f"{learning_session.department or '课程'}学习",
                 summary=learning_session.summary or learning_session.notes,
                 source_type="learning_session",
