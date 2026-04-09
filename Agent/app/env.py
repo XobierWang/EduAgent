@@ -2,29 +2,25 @@
 
 from __future__ import annotations
 
-import os
 from pathlib import Path
 
+from pydantic_settings import BaseSettings
 
-ENV_FILE = Path(__file__).resolve().parent.parent / ".env"
+
+class Settings(BaseSettings):
+    model_config = {
+        "env_file": Path(__file__).resolve().parent.parent / ".env",
+        "env_file_encoding": "utf-8",
+        "extra": "ignore",
+    }
+
+    qwen_api_key: str = ""
+    qwen_model: str = "qwen-vl-plus-latest"
+    qwen_tts_model: str = "cosyvoice-v3-flash"
+    qwen_tts_voice: str = "longanyang"
+    qwen_embedding_model: str = "text-embedding-v4"
+    qwen_embedding_dimensions: int = 1024
+    qwen_base_url: str = "https://dashscope.aliyuncs.com/compatible-mode/v1"
 
 
-def load_env_file(env_file: Path = ENV_FILE) -> None:
-    if not env_file.exists():
-        return
-
-    for raw_line in env_file.read_text(encoding="utf-8").splitlines():
-        line = raw_line.strip()
-        if not line or line.startswith("#") or "=" not in line:
-            continue
-
-        key, value = line.split("=", 1)
-        key = key.strip()
-        value = value.strip()
-        if not key:
-            continue
-
-        if len(value) >= 2 and value[0] == value[-1] and value[0] in {"'", '"'}:
-            value = value[1:-1]
-
-        os.environ.setdefault(key, value)
+settings = Settings()

@@ -1,14 +1,11 @@
 # @XobierWang
 
 import json
-import os
-from typing import Any, Dict, List, Optional
+from typing import Any, Optional
 
 from openai import OpenAI
 
-
-DEFAULT_BASE_URL = "https://dashscope.aliyuncs.com/compatible-mode/v1"
-DEFAULT_MODEL = "qwen-vl-plus-latest"
+from app.env import settings
 
 
 class QwenClient:
@@ -18,23 +15,23 @@ class QwenClient:
         base_url: Optional[str] = None,
         model: Optional[str] = None,
     ) -> None:
-        resolved_api_key = api_key or os.getenv("QWEN_API_KEY")
+        resolved_api_key = api_key or settings.qwen_api_key
         if not resolved_api_key:
             raise ValueError("QWEN_API_KEY is not configured")
 
-        self.model = model or os.getenv("QWEN_MODEL", DEFAULT_MODEL)
+        self.model = model or settings.qwen_model
         self.client = OpenAI(
             api_key=resolved_api_key,
-            base_url=base_url or os.getenv("QWEN_BASE_URL", DEFAULT_BASE_URL),
+            base_url=base_url or settings.qwen_base_url,
         )
 
     def complete_with_tools(
         self,
-        messages: List[Dict[str, Any]],
-        tools: List[Dict[str, Any]],
+        messages,
+        tools,
         tool_choice: str = "auto",
         temperature: float = 0,
-    ) -> Dict[str, Any]:
+    ):
         response = self.client.chat.completions.create(
             model=self.model,
             messages=messages,
@@ -73,9 +70,9 @@ class QwenClient:
 
     def complete(
         self,
-        messages: List[Dict[str, Any]],
+        messages,
         temperature: float = 0,
-    ) -> Dict[str, Any]:
+    ):
         response = self.client.chat.completions.create(
             model=self.model,
             messages=messages,

@@ -4,19 +4,15 @@ from __future__ import annotations
 
 import json
 import logging
-import os
-import re
 from pathlib import Path
 from typing import Any, Optional
 
 from app.db.models import MemoryEvent
 from app.db.session import DATA_DIR
+from app.env import settings
 from openai import OpenAI
 
 VECTOR_DIR = DATA_DIR / "faiss"
-DEFAULT_EMBEDDING_MODEL = "text-embedding-v4"
-DEFAULT_EMBEDDING_DIMENSIONS = 1024
-DEFAULT_BASE_URL = "https://dashscope.aliyuncs.com/compatible-mode/v1"
 MAX_BATCH_SIZE = 10
 
 try:
@@ -234,23 +230,18 @@ def _normalize_embedding(embedding: list[float]) -> list[float]:
 
 
 def _embedding_client() -> OpenAI:
-    api_key = os.getenv("QWEN_API_KEY")
+    api_key = settings.qwen_api_key
     if not api_key:
         raise ValueError("QWEN_API_KEY is not configured")
     return OpenAI(
         api_key=api_key,
-        base_url=os.getenv("QWEN_BASE_URL", DEFAULT_BASE_URL),
+        base_url=settings.qwen_base_url,
     )
 
 
 def _embedding_model() -> str:
-    return os.getenv("QWEN_EMBEDDING_MODEL", DEFAULT_EMBEDDING_MODEL)
+    return settings.qwen_embedding_model
 
 
 def _embedding_dimensions() -> int:
-    raw_value = os.getenv("QWEN_EMBEDDING_DIMENSIONS")
-    if raw_value is None:
-        return DEFAULT_EMBEDDING_DIMENSIONS
-    if not re.fullmatch(r"\d+", raw_value):
-        raise ValueError("QWEN_EMBEDDING_DIMENSIONS must be an integer")
-    return int(raw_value)
+    return settings.qwen_embedding_dimensions

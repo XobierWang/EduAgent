@@ -4,6 +4,8 @@ import base64
 import os
 from typing import Dict, Optional
 
+from app.env import settings
+
 
 DEFAULT_SPEECH_MODEL = "cosyvoice-v3-flash"
 DEFAULT_SPEECH_VOICE = "longanyang"
@@ -30,7 +32,7 @@ class QwenSpeechClient:
         resolved_api_key = (
             api_key
             or os.getenv("DASHSCOPE_API_KEY")
-            or os.getenv("QWEN_API_KEY")
+            or settings.qwen_api_key
         )
         if not resolved_api_key:
             raise ValueError("DASHSCOPE_API_KEY or QWEN_API_KEY is not configured")
@@ -42,8 +44,8 @@ class QwenSpeechClient:
             or DEFAULT_WEBSOCKET_URL
         )
 
-        self.model = model or os.getenv("QWEN_TTS_MODEL", DEFAULT_SPEECH_MODEL)
-        self.voice = os.getenv("QWEN_TTS_VOICE", DEFAULT_SPEECH_VOICE)
+        self.model = model or settings.qwen_tts_model
+        self.voice = settings.qwen_tts_voice
         self.websocket_url = (
             websocket_url
             or os.getenv("DASHSCOPE_WEBSOCKET_URL")

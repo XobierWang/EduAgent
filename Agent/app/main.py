@@ -9,10 +9,6 @@ from fastapi.staticfiles import StaticFiles
 from app.api.routes import router
 from app.db.init_db import init_db
 from app.db.session import DATA_DIR
-from app.env import load_env_file
-
-
-load_env_file()
 init_db()
 STATIC_DIR = Path(__file__).resolve().parent / "static"
 
