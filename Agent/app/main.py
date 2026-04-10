@@ -9,6 +9,8 @@ from fastapi.staticfiles import StaticFiles
 from app.api.routes import router
 from app.db.init_db import init_db
 from app.db.session import DATA_DIR
+from app.middleware import LoggingMiddleware, global_exception_handler
+
 init_db()
 STATIC_DIR = Path(__file__).resolve().parent / "static"
 
@@ -41,6 +43,8 @@ app = FastAPI(
     description="学生信息、课程记录和学习记录的基础数据服务。",
     openapi_tags=openapi_tags,
 )
+app.add_middleware(LoggingMiddleware)
+app.add_exception_handler(Exception, global_exception_handler)
 app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
 app.mount("/media", StaticFiles(directory=DATA_DIR), name="media")
 app.include_router(router, prefix="/api")
