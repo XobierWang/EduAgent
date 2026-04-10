@@ -28,16 +28,16 @@ from app.services import (
 logger = logging.getLogger("uvicorn.error")
 
 
-MEDICAL_KEYWORDS = [
+EDUCATIONAL_KEYWORDS = [
     "数学",
-    "冠心病",
-    "心绞痛",
-    "高血压",
-    "糖尿病",
+    "英语",
+    "物理",
+    "化学",
+    "计算机",
     "辅导",
-    "用药",
-    "检查",
-    "住院",
+    "作业",
+    "考试",
+    "课程",
 ]
 
 STYLE_KEYWORDS = {
@@ -54,13 +54,13 @@ EVENT_MATCH_KEYWORDS = [
     "最近",
     "最新",
     "辅导",
-    "住院",
-    "用药",
-    "检查",
+    "课程",
+    "作业",
+    "考试",
     "数学",
-    "胸痛",
-    "心绞痛",
-    "冠心病",
+    "英语",
+    "物理",
+    "计算机",
     "教师",
 ]
 
@@ -319,7 +319,7 @@ def _rebuild_conversation_memory_events(
     for index, text in enumerate(conversation_texts, start=1):
         if not text.strip():
             continue
-        matched_keywords = [keyword for keyword in MEDICAL_KEYWORDS if keyword in text]
+        matched_keywords = [keyword for keyword in EDUCATIONAL_KEYWORDS if keyword in text]
         if not matched_keywords:
             continue
         events.append(
@@ -379,7 +379,7 @@ def _extract_topics(
     topics: list[str] = []
     if preference and preference.focus_topics:
         topics.extend(_split_items(preference.focus_topics))
-    for keyword in MEDICAL_KEYWORDS:
+    for keyword in EDUCATIONAL_KEYWORDS:
         if keyword in conversation_blob and keyword not in topics:
             topics.append(keyword)
     return "、".join(topics[:6]) or "常规健康咨询"

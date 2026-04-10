@@ -763,7 +763,7 @@ def update_course_record(
     summary="创建学习记录",
     description=(
         "创建一条学习记录。学习记录主要保存学习时间、科目、教师、摘要和备注等，"
-        "适合记录一次课程或住院过程。"
+        "适合记录一次课程或学习过程。"
     ),
 )
 def create_learning_session(

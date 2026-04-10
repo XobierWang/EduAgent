@@ -72,7 +72,7 @@ python -m uvicorn app.main:app --reload
 启动后默认访问地址：
 
 - Swagger 文档：`http://127.0.0.1:8000/docs`
-- 健康检查：`http://127.0.0.1:8000/api/health`
+- 服务状态测验：`http://127.0.0.1:8000/api/health`
 
 ### 1.4 初始化和准备数据
 
