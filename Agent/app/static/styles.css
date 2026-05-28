@@ -569,3 +569,113 @@ input[type="file"]:focus,
     max-width: 100%;
   }
 }
+
+/* ── Dark Mode ─────────────────────────── */
+[data-theme="dark"] {
+  --bg: #1a1d23;
+  --panel: rgba(30, 33, 40, 0.92);
+  --panel-strong: #242731;
+  --ink: #e8e6e3;
+  --muted: #9ca3af;
+  --line: rgba(255, 255, 255, 0.1);
+  --accent: #2dd4bf;
+  --accent-strong: #5eead4;
+  --accent-soft: rgba(45, 212, 191, 0.14);
+  --shadow: 0 24px 60px rgba(0, 0, 0, 0.35);
+}
+
+[data-theme="dark"] body {
+  background:
+    radial-gradient(circle at top left, rgba(45, 212, 191, 0.08), transparent 28%),
+    radial-gradient(circle at bottom right, rgba(20, 184, 166, 0.06), transparent 24%),
+    linear-gradient(135deg, #1a1d23 0%, #16181d 100%);
+}
+
+[data-theme="dark"] input,
+[data-theme="dark"] textarea,
+[data-theme="dark"] select {
+  color: var(--ink);
+  background: rgba(255, 255, 255, 0.06);
+  border-color: var(--line);
+}
+
+.theme-toggle {
+  position: fixed;
+  top: 16px;
+  right: 20px;
+  z-index: 100;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: 1px solid var(--line);
+  background: var(--panel);
+  color: var(--ink);
+  font-size: 1.2rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.25s;
+  backdrop-filter: blur(12px);
+}
+
+.theme-toggle:hover {
+  background: var(--accent-soft);
+  border-color: var(--accent);
+}
+
+/* ── Toast Notifications ────────────────── */
+.toast-container {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 200;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.toast {
+  padding: 12px 20px;
+  border-radius: 12px;
+  font-size: 0.89rem;
+  color: #fff;
+  backdrop-filter: blur(16px);
+  animation: toastIn 0.3s ease-out;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.18);
+}
+
+.toast--success { background: rgba(15, 118, 110, 0.92); }
+.toast--error   { background: rgba(220, 38, 38, 0.92); }
+.toast--info    { background: rgba(37, 99, 235, 0.92); }
+
+@keyframes toastIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Loading Spinner ────────────────────── */
+.spinner {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 2.5px solid var(--line);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin 0.6s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.loading-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 150;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0,0,0,0.25);
+  backdrop-filter: blur(2px);
+}
