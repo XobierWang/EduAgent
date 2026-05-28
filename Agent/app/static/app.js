@@ -93,6 +93,7 @@ async function submitQuery(event) {
 
   submitButton.disabled = true;
   setStatus("查询中", "loading");
+  if (window.showLoading) window.showLoading(true);
   setBlockContent(answerOutput, "正在调用 /api/agent/query ...");
   audioVoiceMeta.classList.add("hidden");
   audioVoiceMeta.textContent = "";
@@ -126,12 +127,15 @@ async function submitQuery(event) {
     }
 
     setStatus("查询完成", "success");
+    if (window.showToast) window.showToast('查询完成', 'success');
   } catch (error) {
     const message = error instanceof Error ? error.message : "请求失败";
     setBlockContent(answerOutput, message);
     setStatus("查询失败", "error");
+    if (window.showToast) window.showToast('查询失败: ' + message, 'error');
   } finally {
     submitButton.disabled = false;
+    if (window.showLoading) window.showLoading(false);
   }
 }
 

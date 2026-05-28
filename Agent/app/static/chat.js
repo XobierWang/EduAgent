@@ -179,6 +179,7 @@ async function onSubmit(event) {
   addUserMessage(text, imageFile);
   sendChatButton.disabled = true;
   setChatStatus("回复中", "loading");
+  if (window.showLoading) window.showLoading(true);
 
   try {
     const payload = await buildPayload();
@@ -199,6 +200,7 @@ async function onSubmit(event) {
     chatImageInput.value = "";
     renderPreview(chatImagePreview, null, "本轮未选择图片");
     setChatStatus("已完成", "success");
+    if (window.showToast) window.showToast('回复完成', 'success');
   } catch (error) {
     const message = error instanceof Error ? error.message : "请求失败";
     chatState.messages.push({
@@ -207,8 +209,10 @@ async function onSubmit(event) {
     });
     renderChat();
     setChatStatus("请求失败", "error");
+    if (window.showToast) window.showToast('请求失败: ' + message, 'error');
   } finally {
     sendChatButton.disabled = false;
+    if (window.showLoading) window.showLoading(false);
   }
 }
 
